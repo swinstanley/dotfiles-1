@@ -1,4 +1,6 @@
 " Make it beautiful - colors and fonts
+scriptencoding utf-8
+set encoding=utf-8
 
 if has("gui_running")
   "tell the term has 256 colors
@@ -17,16 +19,16 @@ if has("gui_running")
   elseif has ("macos")
     set guifont=Inconsolata\ XL:h17,Inconsolata:h20,Monaco:h17
   elseif has ("win32") || has("win64")
-    set guifont=Consolas:h11:cANSI
+    let regfont = system('reg query HKLM\Software\Microsoft\Windows NT\CurrentVersion\Fonts')
+    set guifont=Consolas_for_Powerline_FixedD:h11:cANSI
+  elseif syste
+    set guifont=ConsolasD:h11:cANSI
   end
 else
   let g:CSApprox_loaded = 1
-
   " For people using a terminal that is not Solarized
-  if exists("g:yadr_using_unsolarized_terminal")
-    let g:solarized_termcolors=256
-    let g:solarized_termtrans=1
-  end
+  let g:solarized_termcolors=256
+  let g:solarized_termtrans=1
 endif
 
 let g:solarized_contrast="high"

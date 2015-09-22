@@ -3,6 +3,7 @@ custom/zsh
 vim/backups
 vim/view
 *un~
+.ropeproject
 vim/.netrwhist
 vim/tmp
 vim/spell

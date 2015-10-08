@@ -31,7 +31,6 @@ else
   let g:solarized_termtrans=1
 endif
 
-
 let g:solarized_contrast="high"
 colorscheme solarized
 set background=dark

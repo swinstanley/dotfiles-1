@@ -1,4 +1,3 @@
-Bundle 'sheerun/vim-polyglot'
 Bundle 'jtratner/vim-flavored-markdown.git'
 Bundle 'nelstrom/vim-markdown-preview'
 Bundle 'skwp/vim-html-escape'

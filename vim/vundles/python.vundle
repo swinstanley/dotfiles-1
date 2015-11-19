@@ -1,7 +1,7 @@
 " Sam Winstanley - things I need for python"
 
-" Bundle 'davidhalter/jedi-vim'
-Plugin 'Valloric/YouCompleteMe'
+Bundle 'davidhalter/jedi-vim'
+" Plugin 'Valloric/YouCompleteMe'
 Bundle 'ivanov/vim-ipython'
 Bundle 'jmcantrell/vim-virtualenv'
 Bundle 'nvie/vim-flake8'

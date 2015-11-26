@@ -1,2 +1,2 @@
-Plugin 'OmniSharp/omnisharp-vim'
+# Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'tpope/vim-dispatch'

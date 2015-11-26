@@ -5,7 +5,7 @@ GOTO :MAIN
     SET PATH=
     SET LIB=
     SET INCLUDE=
-    FOR /F "usebackq tokens=1 delims==" %%V in (`SET ENV_`) DO SET "%%V="
+    FOR /F "usebackq tokens=1 delims==" %%V in (`SET ENV_ 2^>nul` ) DO SET "%%V="
 GOTO :EOF
 :CORE 
     SET "PATH=e:\home\swinstanley\bin\"
@@ -14,6 +14,11 @@ GOTO :EOF
 
     SET "PATH=%PATH%;%WINDIR%;%WINDIR%\System32"
     GOTO :EOF
+
+:PYTHON27
+    SET "PYTHON=c:\tools\python2\python.exe"
+    GOTO :PYTHON
+
 :PYTHON 
     IF "%PYTHON%"=="" SET "PYTHON=C:\tools\python\python.exe"
     IF NOT EXIST "%PYTHON%" ( "ECHO Unable to find %PYTHON%" & exit 5)
@@ -30,7 +35,9 @@ GOTO :EOF
     SET "PATH=%PATH%;e:\home\swinstanley\Documents\vim\vim74\"
 
 GOTO :EOF
-
+:CMDER
+    @set PATH=%PATH%;%CMDER_ROOT%\vendor\conemu-maximus5\Conemu
+GOTO :EOF
 :GIT
     SET "PATH=%PATH%;C:\Program Files\Git\cmd\"
 GOTO :EOF
@@ -57,53 +64,36 @@ REM ----------------------------------------------------------------------------
         )
     
     IF "%VCARCH%"=="32" (
-        SET VSVARS_FLAGS=x86
+        SET "ARCHDIR="
     )
     IF "%VCARCH%"=="64" (
-        SET VSVARS_FLAGS=amd64 
+        SET ARCHDIR=amd64
     )
 
-    IF "%VSVARS_FLAGS%"==""  (
-        ECHO "Error in :VS_PYTHON unable to discover compiler version"
-        GOTO :EOF
-    )
     SET _BASEDIR=
-    REM ECHO SETTING VC++ Directories for VC Version %VCVER%
-    @IF "%VCVER%"=="1500" ( 
-    SET "_BASEDIR=C:\Program Files (x86)\Common Files\Microsoft\Visual C++ for Python\9.0\" 
+    @IF "%VCVER%"=="1500" SET "_BASEDIR=C:\Program Files (x86)\Common Files\Microsoft\Visual C++ for Python\9.0"
 
-    @IF "%VCVER%"=="1600" ( 
-    SET "_BASEDIR=C:\Program Files (x86)\Microsoft Visual Studio 10.0\" )
+    @IF "%VCVER%"=="1600" SET "_BASEDIR=C:\Program Files (x86)\Microsoft Visual Studio 10.0" 
+    
 
-    @IF "%VCVER%"=="1900" ( 
-    SET "_BASEDIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0\" )
+    @IF "%VCVER%"=="1900" SET "_BASEDIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0"
 
     IF "%_BASEDIR%"=="" (
         ECHO Unable to find visual studio base directory
         GOTO :EOF )
 
-    IF EXIST "%_BASEDIR%\VC\bin\%VCARCH%" ( 
-        SET "PATH=%PATH%;%_BASEDIR%\VC\bin\%VCARCH%" 
-        ) ELSE (
-        SET "PATH=%PATH%;%_BASEDIR%\VC\bin"
-        )
-    
-    IF EXIST "%_BASEDIR%\VC\lib\%VCARCH%" ( 
-        SET "LIB=%PATH%;%_BASEDIR%\VC\lib\%VCARCH%;%_BASEDIR%\VC\atlmfc\lib\%VCARCH%" 
-        ) ELSE (
-            SET "LIB=%PATH%;%_BASEDIR%\VC\lib;%_BASEDIR%\VC\atlmfc\lib"
-        )
+        SET "PATH=%PATH%;%_BASEDIR%\VC\bin\%ARCHDIR%" 
+        SET "LIB=%PATH%;%_BASEDIR%\VC\lib\%ARCHDIR%;%_BASEDIR%\VC\atlmfc\lib\%ARCHDIR%" 
 
         SET "INCLUDE=%PATH%;%_BASEDIR%\VC\include;%_BASEDIR%\VC\atlmfc\include" 
-
-        FOR /F "tokens=2 delims==" %%V in (`SET ENV_INCLUDE`) DO SET "INCLUDE=!INCLUDE!;%%V"
-        FOR /F "usebackq tokens=2 delims==" %%V in (`SET ENV_LIB`) DO SET "LIB=!LIB!;%%V"
+        REM FOR /F "tokens=2 delims==" %%V in (`SET ENV_INCLUDE`) DO SET INCLUDE=!INCLUDE!;%%V
+        REM FOR /F "usebackq tokens=2 delims==" %%V in (`SET ENV_LIB`) DO SET LIB=!LIB!;%%V
 
 GOTO :EOF
 
 :MAIN
 IF "%1"=="" ( 
-    SET TARGETS=CLEAR CORE WINDOWS PYTHON VIM GIT CHOCOLATEY MSYS NODEJS VS_PYTHON
+    SET TARGETS=CLEAR CORE WINDOWS PYTHON VIM GIT CHOCOLATEY MSYS NODEJS VS_PYTHON CMDER
 ) ELSE SET TARGETS=%*
 
 FOR %%T in (%TARGETS%) DO ECHO :%%T &  CALL :%%T

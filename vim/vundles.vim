@@ -35,6 +35,6 @@ runtime csharp.vundle
 if filereadable(expand("~/.yadr/vim/.vundles.local"))
   source ~/.yadr/vim/.vundles.local
 endif
-
+command! -nargs=* EditBundle :vimgrep /Python/ ~/.yadr/vim/**/*vundle <args>
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on

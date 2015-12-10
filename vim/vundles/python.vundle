@@ -2,6 +2,7 @@
 
 Bundle 'davidhalter/jedi-vim'
 " Plugin 'Valloric/YouCompleteMe'
-Bundle 'ivanov/vim-ipython'
+" Bundle 'ivanov/vim-ipython'
+Bundle 'klen/python-mode'
 Bundle 'jmcantrell/vim-virtualenv'
 Bundle 'nvie/vim-flake8'

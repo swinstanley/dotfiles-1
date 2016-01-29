@@ -1,5 +1,6 @@
 @echo off
 SET _DEBUG=0
+SET _THIS_FILE=%~f0
 GOTO :MAIN 
 :CLEAR
     SET PATH=
@@ -18,10 +19,21 @@ GOTO :EOF
 :PYTHON27
     SET "PYTHON=c:\tools\python2\python.exe"
     GOTO :PYTHON
+:PY34
+:PYTHON34_64
+    SET "PYTHON=C:\tools\python34_64\python.exe"
+    GOTO :PYTHON
+
+:PY34_32
+:PYTHON34_32
+    SET "PYTHON=C:\tools\PYTHON34_32Bit\python.exe"
+    GOTO :PYTHON
+:PY35
+SET PYTHON=c:\tools\python\python.exe
 
 :PYTHON 
     IF "%PYTHON%"=="" SET "PYTHON=C:\tools\python\python.exe"
-    IF NOT EXIST "%PYTHON%" ( "ECHO Unable to find %PYTHON%" & exit 5)
+    IF NOT EXIST "%PYTHON%" ( "ECHO Unable to find %PYTHON%" & GOTO :EOF)
     IF "%_DEBUG%"=="" ("ECHO %PYTHON% being used to seed path")
 
     FOR /F %%I in ("%PYTHON%") DO SET "_PYDIR=%%~dpI"
@@ -90,13 +102,20 @@ REM ----------------------------------------------------------------------------
         REM FOR /F "usebackq tokens=2 delims==" %%V in (`SET ENV_LIB`) DO SET LIB=!LIB!;%%V
 
 GOTO :EOF
-
+:HELP
+echo COMMANDS ARE
+for /F "usebackq tokens=1 delims=:" %%I in (`findstr /R "^:[a-Z].*" "%_THIS_FILE%"`) DO (ECHO %%I)
+GOTO :EOF
 :MAIN
+IF "%*:help=" == "%*" (
+    SET TARGETS=HELP
+)
 IF "%1"=="" ( 
     SET TARGETS=CLEAR CORE WINDOWS PYTHON VIM GIT CHOCOLATEY MSYS NODEJS VS_PYTHON CMDER
 ) ELSE SET TARGETS=%*
 
 FOR %%T in (%TARGETS%) DO ECHO :%%T &  CALL :%%T
-
+SET _THIS_FILE=
+SET TARGETS=
 
 

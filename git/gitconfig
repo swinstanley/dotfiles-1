@@ -128,3 +128,6 @@
   path = .gitconfig.user
 [http]
 	sslverify = false
+[user]
+    name = Sam Winstanley
+    email = swinstanley@forgetdata.com

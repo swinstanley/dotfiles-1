@@ -1,27 +1,6 @@
 if !exists("g:yadr_disable_solarized_enhancements")
   hi! link txtBold Identifier
-  hi! link zshVariableDef Identifier
-  hi! link zshFunction Function
-  hi! link rubyControl Statement
-  hi! link rspecGroupMethods rubyControl
-  hi! link rspecMocks Identifier
-  hi! link rspecKeywords Identifier
-  hi! link rubyLocalVariableOrMethod Normal
-  hi! link rubyStringDelimiter Constant
-  hi! link rubyString Constant
-  hi! link rubyAccess Todo
-  hi! link rubySymbol Identifier
-  hi! link rubyPseudoVariable Type
-  hi! link rubyRailsARAssociationMethod Title
-  hi! link rubyRailsARValidationMethod Title
-  hi! link rubyRailsMethod Title
-  hi! link rubyDoBlock Normal
   hi! link MatchParen DiffText
-
-  hi! link CTagsModule Type
-  hi! link CTagsClass Type
-  hi! link CTagsMethod Identifier
-  hi! link CTagsSingleton Identifier
 
   hi! link javascriptFuncName Type
   hi! link jsFuncCall jsFuncName
